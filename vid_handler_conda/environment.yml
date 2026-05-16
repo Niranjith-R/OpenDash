@@ -1,0 +1,15 @@
+name: opencv_env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - ffmpeg
+  - libopencv=*=headless_*
+  - opencv
+  - numpy
+  - pip
+  - pip :
+    - psycopg-binary
+    - confluent-kafka
+    - psycopg
