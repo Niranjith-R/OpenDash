@@ -1,0 +1,64 @@
+{% extends 'main/index.html' %}
+
+{% block content %}
+
+    <div class="pagination">
+        <span class="step-Links">
+            {% if page_objs.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_objs.previous_page_number }}">previous</a>
+            {% endif %}
+        
+            <span class="current">
+                Page {{ page_objs.number }} of {{ page_objs.paginator.num_pages }}
+            </span>
+
+            {% if page_objs.has_next %}
+                <a href="?page={{ page_objs.next_page_number }}">next</a>
+                <a href="?page={{ page_objs.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+
+
+
+<section class="tiles_section">
+
+    {% for video in page_objs %}
+    <div class="tiles">
+        <h2>{{video.video_name}}</h2>
+        <video controls preload="metadata">
+            <!-- <source src="http://192.168.1.11:9876/{{video.path}}#t=0.1" type="video/mp4"> -->
+             <source src="http://{{nginx}}:{{nginx_port}}/{{video.path}}" type="video/mp4">
+        </video>
+        <p>Camera : {{video.camera_name}}</p>
+        <p>Created on : {{video.created_date}}</p>
+        <div class="button">
+            <!-- <button class="btn">Save</button> -->
+             <a href="http://{{nginx}}:{{nginx_port}}/{{video.path}}" download class="btn">Save</a>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+
+    <div class="pagination">
+        <span class="step-Links">
+            {% if page_objs.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_objs.previous_page_number }}">previous</a>
+            {% endif %}
+        
+            <span class="current">
+                Page {{ page_objs.number }} of {{ page_objs.paginator.num_pages }}
+            </span>
+
+            {% if page_objs.has_next %}
+                <a href="?page={{ page_objs.next_page_number }}">next</a>
+                <a href="?page={{ page_objs.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+
+
+{% endblock %}

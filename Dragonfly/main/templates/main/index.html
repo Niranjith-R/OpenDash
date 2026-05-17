@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenDash</title>
+</head>
+{% load static %}
+<link rel="stylesheet" href={% static 'main/style.css' %}>
+
+
+<body>
+    
+    <header class="header">
+        
+        <div class="logo_container">
+            <a href="/">
+                <img src="../static/images/aperture-svgrepo-com.svg" alt="Dragonfly Logo" class="image">
+            </a>
+            <div class="logo_text">
+                <a href="/">
+                    <h3>OpenDash</h3>
+                </a>
+            </div>
+        </div>
+        
+        <button class="menu-toggle" id="menuToggle">☰</button>
+
+       <form action="{% url 'logout' %}" method="post" class="logout_form">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+    </header>
+    
+    <div class="content_wrapper">
+
+        <div class="left_container" id="sidebar"> 
+            
+            <div class="ele">
+                <div class="text">
+                    <a href="/settings/">Settings</a>
+                </div>
+            </div>
+            <!-- <div class="ele">
+                <a href="/add/">Add Camera</a>
+            </div> -->
+        </div>
+
+        <div class="main_body">
+            {% block content %}
+            
+            {% endblock %}
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const sidebar = document.getElementById('sidebar');
+
+            if (menuToggle && sidebar) {
+                menuToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('active');
+
+                    if (sidebar.classList.contains('active')) {
+                        menuToggle.innerHTML = '✕';
+                    } else {
+                        menuToggle.innerHTML = '☰';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

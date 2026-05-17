@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenDash</title>
+</head>
+{% load static %}
+<link rel="stylesheet" href={% static 'main/style.css' %}>
+
+<header class="header">
+        
+        <div class="logo_container">
+            <a href="/">
+                <img src="../static/images/aperture-svgrepo-com.svg" alt="Dragonfly Logo" class="image">
+            </a>
+            <div class="logo_text">
+                <a href="/">
+                    <h3>OpenDash</h3>
+                </a>
+            </div>
+        </div>
+    </header>
+
+<div class="img_div">
+    <img src="../static/images/account-svgrepo-com.svg" alt="Account Image">
+</div>
+
+<div class="main_content">
+    <div class="text_login">
+        <h2>Login</h2>
+    </div>
+    <div class="input">
+        <form action="" class="input" method="POST">
+            {% csrf_token %}
+            <input type="text" placeholder="Username" name="username">
+            <input type="password" placeholder="Password" name="password">
+            <div class="button_div">
+            <button type="submit" name="action" value="login">Login</button>
+            <!-- <button type="submit" name="action" value="signup">Sign Up</button> -->
+            </div>
+        </form>
+    </div>
+</div>

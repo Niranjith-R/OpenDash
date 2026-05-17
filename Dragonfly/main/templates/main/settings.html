@@ -1,0 +1,73 @@
+{% extends 'main/index.html' %}
+
+{% block content %}
+
+<div class="terminal-container">
+    <h1>Vid_handler Live Stream</h1>
+    
+    <div id="status-badge">Connecting...</div>
+
+    <div id="terminal">
+        <div class="log-entry">
+            <span class="timestamp">[System]</span> Initializing environment...
+        </div>
+    </div>
+    <div class="text_field">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="Message" placeholder="Enter Command" name="prod_msg">
+            <button type="Send" name="action" value="send">send</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+    const socket = new WebSocket(
+        protocol + window.location.host + '/ws/kafka/'
+    );
+
+    const terminal = document.getElementById('terminal');
+    const statusBadge = document.getElementById('status-badge');
+
+    function appendLog(message, isSystem = false) {
+        const now = new Date().toLocaleTimeString();
+        const newEntry = document.createElement('div');
+        newEntry.className = 'log-entry';
+        
+        if (isSystem) {
+            newEntry.style.color = '#888';
+            newEntry.style.fontStyle = 'italic';
+        }
+
+        newEntry.innerHTML = `<span class="timestamp">[${now}]</span> ${message}`;
+        terminal.appendChild(newEntry);
+        
+        // Real-time auto-scroll
+        terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    // Triggered when connection is established
+    socket.onopen = function(e) {
+        statusBadge.innerHTML = "CONNECTED";
+        statusBadge.className = "status-connected";
+        appendLog("WebSocket connection established successfully. Listening for Kafka messages...", true);
+    };
+
+    socket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        // Display the Kafka value in real-time
+        appendLog(data.message);
+    };
+
+    socket.onclose = function(e) {
+        statusBadge.innerHTML = "DISCONNECTED";
+        statusBadge.className = "status-disconnected";
+        appendLog("Connection lost. Attempting to reconnect...", true);
+    };
+
+    socket.onerror = function(err) {
+        appendLog("WebSocket Error detected. Check server logs.", true);
+    };
+</script>
+{% endblock %}

@@ -1,0 +1,386 @@
+/* --- Global Styles and Reset --- */
+
+/* Use border-box model for easier responsive layout */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+:root {
+    /* Define a base font size for rem calculations (1rem = 16px) */
+    font-size: 16px; 
+}
+
+/* Base styles */
+* {
+    color: white;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    /* Use min-height for better behavior on mobile (prevents collapsing) */
+    min-height: 100vh;
+    width: 100%;
+    /* Prevent horizontal overflow that can be caused by absolute units or 100vw */
+    overflow-x: hidden; 
+    background-color: #393E46;
+}
+
+a {
+    /* Use rem for padding */
+    padding: 1.125rem; /* 18px */
+    text-decoration: none; /* Clear default underline */
+    display: block; /* Make link fill container for better click area */
+}
+
+
+.header {
+    background-color: #222831;
+    height: 7vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    /* Use rem for padding */
+    padding: 0 1.25rem; /* 20px */
+    flex-shrink: 0; /* Ensures header doesn't shrink */
+}
+
+.logo_container {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.logo_text {
+    margin: 0 0.3125rem; /* 5px */
+    font-size: 1.25rem; /* Base font size for desktop */
+    font-weight: bold;
+}
+
+.image {
+    height: 2.5rem; /* Reduced height for a sleeker look and better fit in 7vh */
+    width: auto;
+    display: block;
+}
+
+
+.content_wrapper {
+    display: flex;
+    width: 100%;
+    min-height: 93vh; 
+}
+
+
+.left_container {
+    /* Use fixed rem width for desktop sidebar */
+    width: 15rem; /* Smaller, more common sidebar width */
+    min-height: 100%;
+    background-color: #212429;
+    flex-shrink: 0; 
+    padding-top: 0.625rem; /* 10px */
+}
+
+.ele {
+    /* Enhanced visual feedback for navigation items */
+    border: 1px solid transparent;
+    transition: background-color 0.2s, border-color 0.2s;
+    margin: 0.625rem 0.5rem; /* 10px top/bottom, 8px left/right */
+    border-radius: 5px;
+}
+
+.ele:hover {
+    background-color: #2f343a;
+    border-color: rgba(177, 177, 177, 0.3);
+}
+
+.text {
+    display: flex;
+    justify-content: flex-start; /* Align text to the start */
+    align-items: center;
+    padding: 0.5rem; /* Inner padding for text */
+    font-size: 0.95rem;
+}
+
+
+/* --- Right Content Area (Tiles) --- */
+
+.tiles_section {
+    /* Takes up all remaining space */
+    flex-grow: 1; 
+    display: flex;
+    /* Crucial for responsiveness: allows tiles to wrap */
+    flex-wrap: wrap; 
+    /* Use rem for gap and padding */
+    gap: 1.25rem; /* 20px */
+    padding: 1.875rem; /* 30px */
+    /* Allow vertical scrolling only within this section */
+    overflow-y: auto; 
+}
+
+.tiles {
+    /* Fixed Container Size (Example: 300px wide x 200px tall) */
+    flex: 0 0 18.75rem; /* 300px wide, will not grow or shrink */
+    height: 37rem;   /* Example fixed height: 200px */
+    
+    /* Ensure the video element inside doesn't overflow the rounded corners */
+    overflow: hidden; 
+    
+    background-color: #989fab;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.2);
+    padding: 1.25rem; /* 20px - Now acts as inner margin around the video */
+    border-radius: 0.625rem; /* 10px */
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+/* --- Final Rule for the Video Element --- */
+.tiles video {
+    /* CRITICAL: Ensures the video never exceeds the width of its parent (.tiles) */
+    max-width: 100%; 
+    width: 100%;
+    
+    /* CRITICAL: Allows the height to adjust automatically based on the video's aspect ratio,
+       scaling proportionally with the constrained width. */
+    height: auto; 
+    
+    /* This ensures it fills the entire width of the space available within the tile's padding */
+    display: block; 
+}
+.tiles:hover {
+    background-color: #61656d;
+    transform: scale(1.03); /* Slightly larger hover effect */
+}
+
+/* --- Button Styling --- */
+
+.btn {
+    background-color: #FFC132;
+    color: #222831; /* Contrast with yellow background */
+    border-radius: 5px;
+    border: none;
+    padding: 0.5rem 1rem; /* Use rem for padding */
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.btn:hover {
+    background-color: #e5ac2c; /* Slightly darker on hover */
+}
+
+
+/* ---------------------------------- */
+/* --- MEDIA QUERIES for Responsiveness --- */
+/* ---------------------------------- */
+
+/* Tablet and smaller desktops (Max width 1024px) */
+@media (max-width: 1024px) {
+    /* On slightly smaller screens, allow tiles to stretch up to half the width */
+    .tiles {
+        flex-basis: calc(50% - 0.625rem); /* Roughly two columns (50% minus half the gap) */
+    }
+}
+
+
+/* Mobile Devices (Max width 768px) */
+@media (max-width: 768px) {
+
+    /* 1. Change main layout to stack (Sidebar disappears/moves, Content fills) */
+    .content_wrapper {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    /* 2. Hide the sidebar on small screens (usually toggled via JS) */
+    .left_container {
+        display: none; 
+        /* If you wanted a full-width static nav bar: */
+        /* width: 100%; display: flex; flex-wrap: wrap; height: auto; */
+    }
+    
+    .tiles {
+        flex-basis: 100%; 
+        max-width: 100%;
+    }
+
+    .tiles_section {
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .logo_text {
+        font-size: 1rem;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+ 
+    .left_container {
+
+        display: none; 
+        width: 100%;
+        height: auto;
+    }
+
+    /* This class will be added by JavaScript to make the sidebar appear 
+    */
+    .left_container.active {
+        display: block; 
+    }
+}
+
+
+
+.main_content{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.img_div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.input{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+input{
+    height: 30px;
+    margin: 3px 20px;
+    width: 200px;
+    background-color: #262970;
+    border: 1px solid #262970;
+    border-radius: 15px;
+}   
+
+input,placeholder{
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+.button_div{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+}
+
+
+button{
+    color: black;
+    margin: 5px 10px;
+}
+
+img {
+    height: 20vh;
+    width: 20vw;
+}
+
+.right_button_div{
+    display: flex;
+    justify-content: right;
+    align-items: start;
+}
+
+.logout-form {
+    margin-left: auto; /* This pushes the form to the far right */
+}
+
+/* Responsive Container */
+.terminal-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+/* Status Badge */
+#status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    background-color: #444;
+    color: #fff;
+}
+.status-connected { background-color: #28a745 !important; }
+.status-disconnected { background-color: #dc3545 !important; }
+
+/* Terminal Window Styling */
+#terminal {
+    background-color: #121212;
+    color: #00ff41; /* Classic Matrix/Terminal Green */
+    font-family: 'Fira Code', 'Courier New', monospace;
+    padding: 20px;
+    height: 60vh; /* Responsive height */
+    min-height: 300px;
+    overflow-y: auto;
+    border-radius: 4px;
+    border: 1px solid #333;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.log-entry {
+    line-height: 1.5;
+    margin-bottom: 8px;
+    word-wrap: break-word; /* Prevents long Kafka strings from breaking layout */
+    border-left: 2px solid transparent;
+    padding-left: 10px;
+}
+
+.log-entry:hover {
+    border-left: 2px solid #00ff41;
+    background: rgba(0, 255, 65, 0.05);
+}
+
+.timestamp {
+    color: #008f11;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+
+
+.pagination {
+    text-align: center;
+}
+
+.pagination .step-Links {
+    display: inline-flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.pagination a,
+.pagination .current {
+    display: inline-block;
+}
+
+
+
+
+
+/* Custom Scrollbar for the Terminal */
+#terminal::-webkit-scrollbar { width: 8px; }
+#terminal::-webkit-scrollbar-track { background: #1e1e1e; }
+#terminal::-webkit-scrollbar-thumb { background: #444; border-radius: 4px; }
+
+
