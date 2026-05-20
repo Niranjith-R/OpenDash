@@ -194,22 +194,22 @@ def record_ip_cam_vid(cam):
                 cv.putText(frame, realtime, (30, frame_height-50), fontFace = cv.FONT_HERSHEY_DUPLEX,color=(0,0,0) ,fontScale=0.5, thickness=1)
             end_time = time.time()
             cmd = cam_consumer.poll(timeout = 0)
-            if cmd:
-                logger.info(f"CMD recieved {cmd.value().decode('utf-8')}")
-                cmd_value = cmd.value().decode('utf-8')
-                if cmd_value == "RESTART_IP":
-                    logger.info("Command for Restart in record_ip_cam")
-                    cam_consumer.commit(message=cmd)
-                    cam_consumer.close()
-                    run_state = False
-                    break
-                elif "ADD" in cmd_value:
-                    cmd = cmd.split()
-                    cam = cmd[-1]
-                    logger.info(f"command to add {cam} to the list")
-                    producer.produce(topic, value = f"Can't Recieve frame (Steam end ?)", on_delivery=acked)
-                    producer.poll(0)
-                    ip_camera(add=cam)
+            # if cmd:
+            #     logger.info(f"CMD recieved {cmd.value().decode('utf-8')}")
+            #     cmd_value = cmd.value().decode('utf-8')
+            #     if cmd_value == "RESTART_IP":
+            #         logger.info("Command for Restart in record_ip_cam")
+            #         cam_consumer.commit(message=cmd)
+            #         cam_consumer.close()
+            #         run_state = False
+            #         break
+            #     elif "ADD" in cmd_value:
+            #         cmd = cmd.split()
+            #         cam = cmd[-1]
+            #         logger.info(f"command to add {cam} to the list")
+            #         producer.produce(topic, value = f"Can't Recieve frame (Steam end ?)", on_delivery=acked)
+            #         producer.poll(0)
+            #         ip_camera(add=cam)
 
             if not ret :
                 logger.error("Can't Recieve frame (Steam end ?)")
