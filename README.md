@@ -1,3 +1,4 @@
+
 # OpenDash
 > A first year project of a B.Tech student
 
@@ -8,7 +9,9 @@ OpenDash solves the problem with traditional dashcams — you buy one and you're
 - **Video Recorder** — Captures and segments video from USB or IP cameras
 - **Storage Manager** — Keeps storage usage under control automatically
 - **WebUI** — Django-based interface to view and download recordings
-
+<p>
+<img width="600" height="500" alt="Screenshot_20260518_205515" src="https://github.com/user-attachments/assets/f299b410-fef3-479d-a5d9-e08ebb8dbe0e" />
+</p>
 Most components can be deployed using Docker Compose. However, it is **highly recommended to run Video Recorder natively**.
 
 >  AI used only for debugging
@@ -16,6 +19,11 @@ Most components can be deployed using Docker Compose. However, it is **highly re
 ---
 
 ## Demo
+
+<img width="330" height="600" alt="OpenDash Demo" src="https://github.com/user-attachments/assets/15bb059f-66a3-4cad-a229-2c4338728a1f" />
+
+
+<video src="https://github.com/user-attachments/assets/f118fa34-1d60-43f2-b289-a75652a1366d" controls width="330"></video>
 
 
 ---
